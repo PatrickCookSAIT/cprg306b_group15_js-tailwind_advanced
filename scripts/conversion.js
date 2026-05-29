@@ -43,7 +43,7 @@ function performConversion(fromUnitType, toUnitType) {
     }
 }
 
-*/
+
 
 function convert() {
     const inputID = document.getElementById("inputID");
