@@ -14,38 +14,55 @@ let FtoC = 5/9;
 //for all weight and distance, it is set to 0. 
 // for temperature it is +32 for cToF and -32 for fToC
 
+//higher order function.
+//takes fromUnitType, toUnitType and the type of operation and returns the operation with fromUnit and toUnit inserted
+function performConversion(fromUnitType, toUnitType) {
+
+    if (fromUnitType === "KM" && toUnitType === "MILES") {
+        return (value) => value * kmToMiles;
+    }
+
+    if (fromUnitType === "MILES" && toUnitType === "KM") {
+        return (value) => value * milesToKM;
+    }
+
+    if (fromUnitType === "KG" && toUnitType === "LBS") {
+        return (value) => value * kgToLb;
+    }
+
+    if (fromUnitType === "LBS" && toUnitType === "KG") {
+        return (value) => value * lbToKG;
+    }
+
+    if (fromUnitType === "C" && toUnitType === "F") {
+        return (value) => value * cToF + 32;
+    }
+
+    if (fromUnitType === "F" && toUnitType === "C") {
+        return (value) => (value - 32) * fToC;
+    }
+}
+
+*/
+
 function convert() {
     const inputID = document.getElementById("inputID");
     const resultID = document.getElementById("resultID");
-    //find the units to set formula for conversion
+
     const userUnitID = document.getElementById("userUnitID");
-    const userUnit = userUnitID.innerHTML;
-    let unitConversionMultiplier = 1;
-    let unitConversionOffset = 0;
+    const resultUnitID = document.getElementById("resultUnitID");
 
-    //unitConversionOffset only changes from 0 when temperature is involved
-    if(userUnit === "KM") {
-        unitConversionMultiplier = kmToMiles;
-    } else if(userUnit === "MILES") {
-        unitConversionMultiplier = milesToKM;
-    } else if(userUnit === "kg") {
-        unitConversionMultiplier = kgToLb;
-    } else if(userUnit === "lbs") {
-        unitConversionMultiplier = lbToKG;
-    } else if(userUnit === "C") {
-        unitConversionMultiplier = cToF;
-        unitConversionOffset = 32;
-    } else if(userUnit === "F") {
-        unitConversionMultiplier = fToC;
-        unitConversionOffset = -32;
-    }
+    const userUnit = userUnitID.innerHTML.trim().toUpperCase();
+    const resultUnit = resultUnitID.innerHTML.trim().toUpperCase();
 
+    const converter = performConversion(userUnit, resultUnit);
 
     const userInput = Number(inputID.value);
-    const result = userInput * unitConversionMultiplier + unitConversionOffset;
+    const result = converter(userInput);
 
     resultID.innerHTML = result;
 }
+
 
 function swapUnits() {
     
