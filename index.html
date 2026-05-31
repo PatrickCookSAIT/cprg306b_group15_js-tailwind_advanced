@@ -1,48 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Unit Converter</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-    </head>
-    <body class="bg-blue-50 font-sans">
-        <section class=" alignpx-6 mb-10">
-            <h2 class="text-gray-900"> Unit Converter WIP</h2>
-            <div class="bg-white border-gray-200 rounded-2xl overflow-hidden ">
-
-                <nav class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-
-
-                    <div class=" lg:flex items-center gap-6 border-gray-900">
-                        <a href="#" class="text-sm text-gray-600 hover:text-blue-600">Weight</a>
-                        <a href="#" class="text-sm text-gray-600 hover:text-blue-600">Distance</a>
-                        <a href="#" class="text-sm text-gray-600 hover:text-blue-600">Temperate</a>
-                    </div>                       
-
-                </nav>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-50 font-sans min-h-screen">
+ 
+    <section class="max-w-2xl mx-auto px-4 py-10">
+ 
+        <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Unit Converter</h2>
+ 
+        <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
+ 
+            <!-- Navbar -->
+            <nav class="flex items-center justify-start px-6 py-3 border-b border-gray-100 gap-6">
+                <a id="tab-weight" href="#"
+                   class="tab-link text-sm py-2 text-blue-600 border-b-2 border-blue-600 font-semibold transition-colors duration-150"
+                   onclick="event.preventDefault(); switchTab('weight')">Weight</a>
+ 
+                <a id="tab-distance" href="#"
+                   class="tab-link text-sm py-2 text-gray-500 hover:text-blue-600 transition-colors duration-150"
+                   onclick="event.preventDefault(); switchTab('distance')">Distance</a>
+ 
+                <a id="tab-temperature" href="#"
+                   class="tab-link text-sm py-2 text-gray-500 hover:text-blue-600 transition-colors duration-150"
+                   onclick="event.preventDefault(); switchTab('temperature')">Temperature</a>
+            </nav>
+ 
+            <!-- Weight Panel -->
+            <div id="panel-weight" class="tab-panel p-6">
+                <p class="text-xs text-gray-400 mb-4 text-center">
+                    Enter a single value <span class="font-medium">or</span> a comma-separated list (e.g. <code class="bg-gray-100 px-1 rounded">1, 5, 10.5</code>)
+                </p>
+                <section class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
+                    <div class="flex flex-col items-center w-full sm:w-auto">
+                        <label class="user-unit-label flex bg-gray-100 text-sm font-medium text-gray-700 items-center justify-center w-24 h-10 rounded-lg mb-2">KG</label>
+                        <input type="text" placeholder="e.g. 5 or 1,2,3"
+                               class="input-field border border-gray-300 rounded-lg px-3 py-2 w-48 text-center text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </div>
+                    <div class="flex items-center justify-center h-10 mt-6 sm:mt-0">
+                        <span class="text-2xl text-gray-400">→</span>
+                    </div>
+                    <div class="flex flex-col items-center w-full sm:w-auto">
+                        <label class="result-unit-label flex bg-gray-100 text-sm font-medium text-gray-700 items-center justify-center w-24 h-10 rounded-lg mb-2">LBS</label>
+                        <div class="result-field flex border border-gray-200 rounded-lg px-3 py-2 w-48 min-h-[40px] items-center justify-center bg-gray-50 text-gray-800 text-center">0</div>
+                    </div>
+                </section>
+                <section class="flex flex-wrap items-center justify-center gap-3 mt-6">
+                    <button onclick="convert()" class="bg-red-500 hover:bg-red-600 text-white font-medium w-36 h-11 rounded-lg">Convert</button>
+                    <button onclick="swapUnits()" class="bg-purple-500 hover:bg-purple-600 text-white font-medium w-36 h-11 rounded-lg">Swap Units</button>
+                </section>
             </div>
-        </section>
-        <section class="py-20">
-            <section class="flex items-center justify-center w-2xl">
-                <div class="">
-                    <label id="userUnitID" class="flex bg-gray-400 text-sm font-medium text-heading items-center justify-center">KM</label>
-                    <input type="number" id="inputID" class=" mb-1 w-24 h-24  justify-center">
-                </div>
-                <div>
-                    <h2 class="flex items-center justify-center  h-auto w-auto m-10  text-gray-900">-></h2>
-                    
-                </div>
-                <div>
-                    <label id="resultUnitID" class="flex bg-gray-400 text-sm font-medium text-heading items-center justify-center">MILES</label>
-                    <div id="resultID" class="flex mb-1 w-24 h-24 items-center justify-center bg-white">0</div>
-                </div>
-            </section>
-            <section class="flex items-center justify-center w-2xl">
-                <button onClick="convert()" class="flex items-center justify-center bg-gray-900 text-white bg-red-500 w-48 h-12 rounded-lg m-2 hover:bg-blue-600 hover:text-gray-900">Convert</button>
-                <button onClick="swapUnits()" class="flex items-center justify-center text-white bg-purple-500 w-48 h-12 h-12 rounded-lg m-2 hover:bg-blue-600 hover:text-gray-900">Swap Units</button>
-            </section>
-        </section>
-        <script src="../scripts/conversion.js"></script>
-    </body>
+ 
+            <!-- Distance Panel -->
+            <div id="panel-distance" class="tab-panel hidden p-6">
+                <p class="text-xs text-gray-400 mb-4 text-center">
+                    Enter a single value <span class="font-medium">or</span> a comma-separated list (e.g. <code class="bg-gray-100 px-1 rounded">1, 5, 10.5</code>)
+                </p>
+                <section class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
+                    <div class="flex flex-col items-center w-full sm:w-auto">
+                        <label class="user-unit-label flex bg-gray-100 text-sm font-medium text-gray-700 items-center justify-center w-24 h-10 rounded-lg mb-2">KM</label>
+                        <input type="text" placeholder="e.g. 5 or 1,2,3"
+                               class="input-field border border-gray-300 rounded-lg px-3 py-2 w-48 text-center text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </div>
+                    <div class="flex items-center justify-center h-10 mt-6 sm:mt-0">
+                        <span class="text-2xl text-gray-400">→</span>
+                    </div>
+                    <div class="flex flex-col items-center w-full sm:w-auto">
+                        <label class="result-unit-label flex bg-gray-100 text-sm font-medium text-gray-700 items-center justify-center w-24 h-10 rounded-lg mb-2">MILES</label>
+                        <div class="result-field flex border border-gray-200 rounded-lg px-3 py-2 w-48 min-h-[40px] items-center justify-center bg-gray-50 text-gray-800 text-center">0</div>
+                    </div>
+                </section>
+                <section class="flex flex-wrap items-center justify-center gap-3 mt-6">
+                    <button onclick="convert()" class="bg-red-500 hover:bg-red-600 text-white font-medium w-36 h-11 rounded-lg">Convert</button>
+                    <button onclick="swapUnits()" class="bg-purple-500 hover:bg-purple-600 text-white font-medium w-36 h-11 rounded-lg">Swap Units</button>
+                </section>
+            </div>
+ 
+            <!-- Temperature Panel -->
+            <div id="panel-temperature" class="tab-panel hidden p-6">
+                <p class="text-xs text-gray-400 mb-4 text-center">
+                    Enter a single value <span class="font-medium">or</span> a comma-separated list (e.g. <code class="bg-gray-100 px-1 rounded">0, 20, 100</code>)
+                </p>
+                <section class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
+                    <div class="flex flex-col items-center w-full sm:w-auto">
+                        <label class="user-unit-label flex bg-gray-100 text-sm font-medium text-gray-700 items-center justify-center w-24 h-10 rounded-lg mb-2">C</label>
+                        <input type="text" placeholder="e.g. 0 or 0,20,100"
+                               class="input-field border border-gray-300 rounded-lg px-3 py-2 w-48 text-center text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </div>
+                    <div class="flex items-center justify-center h-10 mt-6 sm:mt-0">
+                        <span class="text-2xl text-gray-400">→</span>
+                    </div>
+                    <div class="flex flex-col items-center w-full sm:w-auto">
+                        <label class="result-unit-label flex bg-gray-100 text-sm font-medium text-gray-700 items-center justify-center w-24 h-10 rounded-lg mb-2">F</label>
+                        <div class="result-field flex border border-gray-200 rounded-lg px-3 py-2 w-48 min-h-[40px] items-center justify-center bg-gray-50 text-gray-800 text-center">0</div>
+                    </div>
+                </section>
+                <section class="flex flex-wrap items-center justify-center gap-3 mt-6">
+                    <button onclick="convert()" class="bg-red-500 hover:bg-red-600 text-white font-medium w-36 h-11 rounded-lg">Convert</button>
+                    <button onclick="swapUnits()" class="bg-purple-500 hover:bg-purple-600 text-white font-medium w-36 h-11 rounded-lg">Swap Units</button>
+                </section>
+            </div>
+ 
+        </div>
+    </section>
+ 
+    <script src="conversion.js"></script>
+ 
+</body>
 </html>
+ 
