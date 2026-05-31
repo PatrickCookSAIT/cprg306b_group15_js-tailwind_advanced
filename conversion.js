@@ -138,6 +138,12 @@ function convert() {
     return;
   }
 
+  // Throws an error if attempting to use a negative number for distance/weight. 
+  if (parsed.some(v => v < 0) && activePanel.id !== "panel-temperature") {
+    resultEl.textContent = "Invalid input - value cannot be negative";
+    return;
+  }
+
   const converter = performConversion(userUnit, resultUnit);
 
   if (!converter) {
